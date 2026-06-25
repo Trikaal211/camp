@@ -1,0 +1,2422 @@
+/* Custom Immersive Design Tokens */
+:root {
+    --color-forest-black: #050807;
+    --color-pine-green: #0d1612;
+    --color-moss-dark: #14211a;
+    --color-moss-light: #203529;
+    --color-stone-grey: #4e5851;
+    --color-golden-fire: #e29a2b;
+    --color-warm-amber: #cc6f08;
+    --color-beige-soft: #f1ebe1;
+    --color-glass-bg: rgba(13, 22, 18, 0.45);
+    --color-glass-border: rgba(241, 235, 225, 0.08);
+    
+    --font-serif: 'Cormorant Garamond', serif;
+    --font-sans: 'Inter', sans-serif;
+    
+    --transition-slow: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-medium: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-fast: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Reset & Global Rules */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+}
+
+html {
+    scroll-behavior: auto; /* Required by Lenis */
+    background-color: var(--color-forest-black);
+    color: var(--color-beige-soft);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+}
+
+body {
+    overflow-x: hidden;
+    position: relative;
+    background-color: var(--color-forest-black);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 1.5s ease;
+}
+
+/* Scroll Container */
+#scroll-wrapper {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+/* General Layout Elements */
+.forest-section {
+    position: relative;
+    min-height: 100vh;
+    padding: 8vw 6vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.section-tag {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    color: var(--color-golden-fire);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 1.5rem;
+}
+
+.serif-title {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    letter-spacing: -0.01em;
+}
+
+.section-title {
+    font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+    line-height: 1.1;
+    margin-bottom: 2rem;
+    color: var(--color-beige-soft);
+}
+
+.body-text {
+    font-size: clamp(1rem, 1.25vw, 1.25rem);
+    font-weight: 300;
+    max-width: 32rem;
+    color: rgba(241, 235, 225, 0.8);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.02em;
+    line-height: 1.7;
+}
+
+.body-text.secondary {
+    color: rgba(241, 235, 225, 0.5);
+    font-size: clamp(0.95rem, 1.15vw, 1.15rem);
+}
+
+/* Glassmorphic Panel Styles */
+.glass-panel {
+    background: var(--color-glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--color-glass-border);
+    border-radius: 16px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+    transition: var(--transition-medium);
+}
+
+/* Fixed Atmospheric Background overlays */
+.fixed-overlay-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1;
+}
+
+#weather-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+/* Film Grain Cinematic Layer */
+.film-grain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    z-index: 10;
+}
+
+/* Sunbeam Gradients (Dhoop) */
+.sunbeam-overlay {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 50% 50%, rgba(226, 154, 43, 0.08) 0%, transparent 60%);
+    opacity: 0;
+    mix-blend-mode: color-dodge;
+    transition: opacity 2s ease;
+    z-index: 3;
+}
+
+.sunbeam-active .sunbeam-overlay {
+    opacity: 1;
+    animation: sweepRays 25s ease-in-out infinite alternate;
+}
+
+@keyframes sweepRays {
+    0% { transform: rotate(-5deg) translate3d(-10px, 0, 0); }
+    100% { transform: rotate(5deg) translate3d(10px, 0, 0); }
+}
+
+/* Rainy Vignette (Varish) */
+.rain-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, transparent 40%, rgba(5, 8, 7, 0.4) 100%);
+    opacity: 0;
+    transition: opacity 2s ease;
+    z-index: 4;
+}
+
+.rain-active .rain-overlay {
+    opacity: 1;
+}
+
+/* Snowy Frost Border (Barf) */
+.snow-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: inset 0 0 100px rgba(255, 255, 255, 0.0);
+    opacity: 0;
+    transition: opacity 2.5s ease, box-shadow 2.5s ease;
+    z-index: 4;
+}
+
+.snow-active .snow-overlay {
+    opacity: 1;
+    box-shadow: inset 0 0 120px rgba(251, 248, 244, 0.08);
+}
+
+/* Drifting Fog Effect */
+.fog-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300%;
+    height: 100%;
+    background-image: radial-gradient(circle, rgba(20, 33, 26, 0.15) 0%, transparent 70%);
+    opacity: 0.6;
+    transition: opacity 2s ease;
+}
+
+.fog-layer-1 {
+    animation: driftFog1 120s linear infinite;
+    background: linear-gradient(90deg, transparent, rgba(241, 235, 225, 0.03), transparent);
+}
+
+.fog-layer-2 {
+    animation: driftFog2 80s linear infinite;
+    background: linear-gradient(90deg, transparent, rgba(20, 33, 26, 0.05), transparent);
+    top: 20%;
+}
+
+@keyframes driftFog1 {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-33.33%, 0, 0); }
+}
+
+@keyframes driftFog2 {
+    0% { transform: translate3d(-33.33%, 0, 0); }
+    100% { transform: translate3d(0, 0, 0); }
+}
+
+/* Cursor Parallax Layer Smooth Transitions */
+.parallax-bg {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+}
+
+/* Sanctuary Gate (Entrance screen) */
+.gate-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-forest-black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    transition: transform 1.2s cubic-bezier(0.85, 0, 0.15, 1), opacity 1.2s ease;
+}
+
+.gate-content {
+    text-align: center;
+    max-width: 40rem;
+    padding: 2rem;
+    z-index: 2;
+}
+
+.gate-subtitle {
+    font-size: 0.8rem;
+    letter-spacing: 0.4em;
+    color: var(--color-stone-grey);
+    display: block;
+    margin-bottom: 1.5rem;
+}
+
+.gate-title {
+    font-family: var(--font-serif);
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 300;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+    color: var(--color-beige-soft);
+}
+
+.gate-tagline {
+    font-size: 1.1rem;
+    letter-spacing: 0.2em;
+    color: var(--color-golden-fire);
+    margin-bottom: 3.5rem;
+}
+
+.btn-luxury {
+    background: transparent;
+    border: none;
+    padding: 1.2rem 2.8rem;
+    color: var(--color-beige-soft);
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    transition: var(--transition-fast);
+}
+
+.btn-txt {
+    position: relative;
+    z-index: 2;
+}
+
+.btn-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--color-stone-grey);
+    z-index: 1;
+    transition: var(--transition-medium);
+}
+
+.btn-luxury:hover {
+    color: var(--color-forest-black);
+}
+
+.btn-luxury:hover .btn-border {
+    background-color: var(--color-beige-soft);
+    border-color: var(--color-beige-soft);
+    box-shadow: 0 0 30px rgba(241, 235, 225, 0.4);
+}
+
+.gate-footnote {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--color-stone-grey);
+    display: block;
+    margin-top: 3rem;
+}
+
+.gate-bg-mist {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(14, 24, 19, 0.4) 0%, var(--color-forest-black) 80%);
+    z-index: 1;
+}
+
+/* Head-Up-Display Navigation Bar (HUD) */
+.hud-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 50;
+    mix-blend-mode: difference;
+}
+
+.hud-logo .logo-link {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    color: var(--color-beige-soft);
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    font-weight: 300;
+}
+
+.hud-controls {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+}
+
+/* Weather Controller HUD Selector */
+.hud-weather-controller {
+    display: flex;
+    background: rgba(241, 235, 225, 0.05);
+    border: 1px solid rgba(241, 235, 225, 0.1);
+    border-radius: 30px;
+    padding: 3px;
+    gap: 2px;
+}
+
+.mood-btn {
+    background: transparent;
+    border: none;
+    color: rgba(241, 235, 225, 0.4);
+    font-family: var(--font-sans);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.mood-btn:hover {
+    color: rgba(241, 235, 225, 0.8);
+}
+
+.mood-btn.active {
+    background: var(--color-beige-soft);
+    color: var(--color-forest-black);
+    font-weight: 600;
+}
+
+/* Audio control bar style */
+.audio-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: var(--color-beige-soft);
+    transition: var(--transition-fast);
+}
+
+.sound-wave {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 14px;
+    width: 20px;
+}
+
+.sound-wave .bar {
+    display: block;
+    width: 2px;
+    height: 2px;
+    background-color: currentColor;
+    transition: height 0.15s ease;
+}
+
+/* Wave Playing State Animation */
+.audio-playing .sound-wave .bar:nth-child(1) { animation: wavePulse 0.8s ease-in-out infinite alternate; }
+.audio-playing .sound-wave .bar:nth-child(2) { animation: wavePulse 0.5s ease-in-out infinite alternate; animation-delay: 0.1s; }
+.audio-playing .sound-wave .bar:nth-child(3) { animation: wavePulse 0.9s ease-in-out infinite alternate; animation-delay: 0.25s; }
+.audio-playing .sound-wave .bar:nth-child(4) { animation: wavePulse 0.6s ease-in-out infinite alternate; animation-delay: 0.05s; }
+
+@keyframes wavePulse {
+    0% { height: 2px; }
+    100% { height: 14px; }
+}
+
+.audio-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+/* HUD Book Button */
+.hud-book-btn {
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--color-beige-soft);
+    border: 1px solid rgba(241, 235, 225, 0.3);
+    padding: 0.5rem 1.5rem;
+    border-radius: 30px;
+    transition: var(--transition-medium);
+}
+
+.hud-book-btn:hover {
+    background-color: var(--color-beige-soft);
+    color: var(--color-forest-black);
+    border-color: var(--color-beige-soft);
+}
+
+/* Immersive Hamburger Toggle */
+.menu-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    width: 28px;
+    height: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.menu-line {
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-beige-soft);
+    transition: var(--transition-medium);
+}
+
+.menu-btn:hover .menu-line.top {
+    transform: translate3d(0, -3px, 0);
+}
+
+.menu-btn:hover .menu-line.bottom {
+    transform: translate3d(0, 3px, 0);
+}
+
+/* Menu active state transformation */
+.menu-active .menu-line.top {
+    transform: translate3d(0, 9px, 0) rotate(45deg);
+}
+
+.menu-active .menu-line.bottom {
+    transform: translate3d(0, -10px, 0) rotate(-45deg);
+}
+
+/* Navigation Overlay Panel */
+.nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--color-forest-black);
+    z-index: 45;
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s;
+}
+
+.nav-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.nav-bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(135deg, rgba(8, 12, 10, 0.95), rgba(13, 22, 18, 0.9)), url('assets/forest_path.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.15;
+    z-index: 1;
+    transition: transform 3s ease;
+}
+
+.nav-overlay.active .nav-bg-image {
+    transform: scale(1.05);
+}
+
+.nav-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 0 10vw;
+    display: grid;
+    grid-template-columns: 1.2fr 2fr;
+    align-items: center;
+    gap: 5vw;
+}
+
+.nav-left {
+    border-right: 1px solid rgba(241, 235, 225, 0.1);
+    padding-right: 5vw;
+}
+
+.nav-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--color-stone-grey);
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.nav-coordinates {
+    font-size: 1.1rem;
+    color: var(--color-beige-soft);
+    font-weight: 300;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+}
+
+.nav-weather p {
+    font-size: 2rem;
+    font-family: var(--font-serif);
+    font-weight: 300;
+}
+
+.temp-sub {
+    font-size: 0.9rem;
+    font-family: var(--font-sans);
+    color: var(--color-golden-fire);
+    display: block;
+    margin-top: 0.2rem;
+}
+
+/* Simulated live forestry info panel styles */
+.live-forest-indicators {
+    margin-top: 2rem;
+    border-top: 1px solid rgba(241, 235, 225, 0.1);
+    padding-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.indicator-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+}
+
+.ind-lbl {
+    color: var(--color-stone-grey);
+}
+
+.ind-val {
+    color: var(--color-beige-soft);
+    font-family: var(--font-serif);
+    font-weight: 300;
+}
+
+.text-green {
+    color: #4ade80 !important;
+}
+
+.nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.nav-item {
+    font-family: var(--font-serif);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 300;
+    color: rgba(241, 235, 225, 0.4);
+    text-decoration: none;
+    line-height: 1;
+    position: relative;
+    display: inline-block;
+    transition: var(--transition-medium);
+}
+
+.nav-item span {
+    position: relative;
+}
+
+.nav-item::before {
+    content: attr(data-index);
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--color-golden-fire);
+    position: absolute;
+    left: -2.5rem;
+    top: 0.5rem;
+    opacity: 0;
+    transition: var(--transition-medium);
+}
+
+.nav-item:hover {
+    color: var(--color-beige-soft);
+    padding-left: 2.5rem;
+}
+
+.nav-item:hover::before {
+    opacity: 1;
+}
+
+/* SECTION 1: HERO (THE CANOPY) */
+.hero-section {
+    height: 100vh;
+    padding: 0;
+    position: relative;
+}
+
+.hero-bg {
+    position: absolute;
+    top: -5%;
+    left: -5%;
+    width: 110%;
+    height: 110%;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+.hero-gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, 
+        rgba(5, 8, 7, 0.3) 0%, 
+        rgba(5, 8, 7, 0.1) 40%, 
+        rgba(5, 8, 7, 0.8) 85%, 
+        var(--color-forest-black) 100%);
+    z-index: 2;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 3;
+    height: 100%;
+    width: 100%;
+    padding: 10% 8% 5% 8%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.title-wrapper {
+    margin-top: 10vh;
+}
+
+.main-hero-title {
+    font-size: clamp(3.5rem, 8vw, 7.5rem);
+    line-height: 0.95;
+    color: var(--color-beige-soft);
+    font-weight: 300;
+}
+
+.main-hero-title .italic {
+    font-style: italic;
+    color: var(--color-beige-soft);
+}
+
+.hero-footer-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.coord-tag {
+    font-size: 0.8rem;
+    letter-spacing: 0.25em;
+    color: var(--color-stone-grey);
+    text-transform: uppercase;
+}
+
+/* Scroll indicator pulsing animate */
+.scroll-prompt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+}
+
+.scroll-txt {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--color-stone-grey);
+    transition: var(--transition-fast);
+}
+
+.scroll-indicator {
+    width: 1px;
+    height: 60px;
+    background-color: rgba(78, 88, 81, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.scroll-dot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 20px;
+    background-color: var(--color-golden-fire);
+    animation: scrollSlide 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@keyframes scrollSlide {
+    0% { transform: translate3d(0, -20px, 0); }
+    50% { transform: translate3d(0, 60px, 0); }
+    100% { transform: translate3d(0, 60px, 0); }
+}
+
+.scroll-prompt:hover .scroll-txt {
+    color: var(--color-beige-soft);
+}
+
+/* SECTION 2: THE WHISPERING WOODS */
+.text-section {
+    background-color: var(--color-forest-black);
+    z-index: 3;
+    transition: background-color 1.5s ease;
+}
+
+.section-bg-dim {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(5, 8, 7, 0.4);
+    pointer-events: none;
+}
+
+.forest-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8vw;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.image-frame {
+    padding: 1.5rem;
+    overflow: hidden;
+}
+
+.image-frame img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+    transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.image-frame:hover img {
+    transform: scale(1.03);
+}
+
+.coords-box {
+    margin-top: 3.5rem;
+    padding: 1.5rem 2rem;
+    display: inline-block;
+}
+
+.panel-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--color-stone-grey);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.panel-value {
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    letter-spacing: 0.05em;
+    color: var(--color-beige-soft);
+    font-weight: 300;
+}
+
+/* ============================================ */
+/* CINEMATIC QUOTE RIBBON                       */
+/* ============================================ */
+.quote-ribbon {
+    position: relative;
+    z-index: 3;
+    padding: 10vw 12vw;
+    background: linear-gradient(180deg, var(--color-forest-black) 0%, var(--color-pine-green) 50%, var(--color-forest-black) 100%);
+    text-align: center;
+    overflow: hidden;
+}
+
+.quote-ribbon::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(226, 154, 43, 0.3), transparent);
+}
+
+.quote-ribbon::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(226, 154, 43, 0.3), transparent);
+}
+
+.quote-ribbon-dark {
+    background: linear-gradient(180deg, var(--color-forest-black) 0%, rgba(13, 22, 18, 0.8) 50%, var(--color-forest-black) 100%);
+}
+
+.quote-content {
+    position: relative;
+    max-width: 50rem;
+    margin: 0 auto;
+}
+
+.quote-mark {
+    font-family: var(--font-serif);
+    font-size: clamp(4rem, 8vw, 8rem);
+    color: var(--color-golden-fire);
+    opacity: 0.25;
+    line-height: 0;
+    display: block;
+    margin-bottom: 2rem;
+}
+
+.quote-text {
+    font-size: clamp(1.6rem, 3vw, 2.8rem);
+    line-height: 1.4;
+    font-style: italic;
+    color: rgba(241, 235, 225, 0.85);
+    margin-bottom: 2.5rem;
+}
+
+.quote-author {
+    font-size: 0.8rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--color-golden-fire);
+    opacity: 0.7;
+}
+
+/* ============================================ */
+/* THE LIVING FOREST (ANIMATED STATS)          */
+/* ============================================ */
+.living-forest-section {
+    background-color: var(--color-forest-black);
+    z-index: 3;
+    padding-top: 6vw;
+    padding-bottom: 10vw;
+    transition: background-color 1.5s ease;
+}
+
+.living-forest-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80vw;
+    height: 80vw;
+    background: radial-gradient(circle, rgba(32, 53, 41, 0.2) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.living-forest-content {
+    position: relative;
+    z-index: 2;
+}
+
+.forest-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5vw;
+    margin-top: 4vw;
+}
+
+.stat-card {
+    padding: 3rem 2.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4), 0 0 40px rgba(226, 154, 43, 0.05);
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    color: var(--color-golden-fire);
+    margin-bottom: 2rem;
+    opacity: 0.7;
+}
+
+.stat-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.stat-number {
+    font-family: var(--font-serif);
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    font-weight: 300;
+    color: var(--color-beige-soft);
+    line-height: 1;
+    margin-bottom: 0.8rem;
+    display: block;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-golden-fire);
+    margin-bottom: 0.8rem;
+    display: block;
+}
+
+.stat-desc {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: rgba(241, 235, 225, 0.45);
+    line-height: 1.5;
+}
+
+/* SECTION 3: THE RIVER DWELLINGS (WEATHER-REACTIVE CAROUSEL) */
+.slider-section {
+    background-color: var(--color-pine-green);
+    z-index: 3;
+    padding-bottom: 10vw;
+    transition: background-color 1.5s ease;
+}
+
+.section-header-block {
+    margin-bottom: 5vw;
+}
+
+.dwelling-weather-hint {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: rgba(241, 235, 225, 0.45);
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.weather-hint-icon {
+    color: var(--color-golden-fire);
+    font-size: 0.6rem;
+    animation: hintPulse 2s ease-in-out infinite;
+}
+
+@keyframes hintPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}
+
+.dwellings-slider-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.dwellings-track {
+    display: flex;
+    gap: 2.5vw;
+    width: max-content;
+}
+
+.dwelling-card {
+    width: clamp(280px, 28vw, 480px);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    opacity: 0.35;
+    transform: scale(0.92);
+    pointer-events: none;
+    transition: opacity 0.8s, transform 0.8s;
+}
+
+.dwelling-card.active {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: all;
+}
+
+.card-img-wrap {
+    width: 100%;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 1.8rem;
+    position: relative;
+}
+
+.card-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 1.2s ease, transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dwelling-card.active:hover .card-img-wrap img {
+    transform: scale(1.05);
+}
+
+/* Card Weather Overlay — mini rain/snow/glow per card */
+.card-weather-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+    border-radius: 8px;
+    transition: opacity 1.5s ease;
+}
+
+/* Sunbeam card glow */
+body.sunbeam-active .card-weather-overlay {
+    background: linear-gradient(135deg, rgba(226, 154, 43, 0.15) 0%, transparent 60%);
+    opacity: 1;
+}
+
+/* Rain card overlay */
+body.rain-active .card-weather-overlay {
+    background: linear-gradient(180deg, transparent 30%, rgba(5, 8, 7, 0.35) 100%);
+    opacity: 1;
+}
+
+/* Snow card frost */
+body.snow-active .card-weather-overlay {
+    background: linear-gradient(180deg, rgba(251, 248, 244, 0.08) 0%, transparent 40%);
+    box-shadow: inset 0 0 30px rgba(251, 248, 244, 0.06);
+    opacity: 1;
+}
+
+/* Night card darkness */
+body.silence-active .card-weather-overlay {
+    background: radial-gradient(circle at 50% 40%, rgba(226, 154, 43, 0.08) 0%, rgba(5, 8, 7, 0.4) 70%);
+    opacity: 1;
+}
+
+/* Card Weather Label Badge */
+.card-weather-label {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(5, 8, 7, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(241, 235, 225, 0.08);
+    transition: opacity 0.6s ease;
+}
+
+.cwl-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-golden-fire);
+    animation: cwlPulse 2s ease infinite;
+}
+
+@keyframes cwlPulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.3); }
+}
+
+.cwl-text {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    font-weight: 600;
+    color: rgba(241, 235, 225, 0.7);
+    text-transform: uppercase;
+}
+
+/* Weather-Reactive body class label colors */
+body.sunbeam-active .cwl-dot { background: #e29a2b; }
+body.rain-active .cwl-dot { background: #6ea8d7; }
+body.snow-active .cwl-dot { background: #e8e4dd; }
+body.silence-active .cwl-dot { background: #a88c5e; }
+
+.card-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+}
+
+.dwelling-type {
+    color: var(--color-golden-fire);
+    font-weight: 500;
+}
+
+.dwelling-price {
+    color: var(--color-stone-grey);
+}
+
+.card-title {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    color: var(--color-beige-soft);
+}
+
+.card-desc {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: rgba(241, 235, 225, 0.7);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    flex-grow: 1;
+}
+
+.btn-card-action {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: var(--color-beige-soft);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: var(--transition-fast);
+    border-top: 1px solid rgba(241, 235, 225, 0.1);
+    padding-top: 1.5rem;
+    margin-top: auto;
+}
+
+.arrow-icon {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-card-action:hover {
+    color: var(--color-golden-fire);
+}
+
+.btn-card-action:hover .arrow-icon {
+    transform: translate3d(5px, 0, 0);
+}
+
+/* Slider navigation layout */
+.slider-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 4.5rem;
+}
+
+.slider-arrow {
+    background: transparent;
+    border: 1px solid rgba(241, 235, 225, 0.2);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-beige-soft);
+    transition: var(--transition-fast);
+}
+
+.slider-arrow svg {
+    width: 20px;
+    height: 20px;
+}
+
+.slider-arrow:hover {
+    border-color: var(--color-beige-soft);
+    background-color: rgba(241, 235, 225, 0.05);
+}
+
+.slider-dots {
+    display: flex;
+    gap: 1rem;
+}
+
+.slider-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: rgba(241, 235, 225, 0.2);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.slider-dot.active {
+    background-color: var(--color-golden-fire);
+    transform: scale(1.5);
+}
+
+/* SECTION 4: THE GLOWING HEARTH (EXPERIENCES) */
+.experience-section {
+    background-color: var(--color-forest-black);
+    z-index: 3;
+    padding-bottom: 12vw;
+    position: relative;
+    transition: background-color 1.5s ease;
+}
+
+.experience-bg-glow {
+    position: absolute;
+    bottom: -10vw;
+    left: 50%;
+    transform: translate3d(-50%, 0, 0);
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(204, 111, 8, 0.12) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.experience-content {
+    position: relative;
+    z-index: 2;
+}
+
+.experience-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 3vw;
+    margin-bottom: 8vw;
+    margin-top: 4vw;
+}
+
+.exp-text-block {
+    padding: 3rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.exp-number {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: var(--color-golden-fire);
+    font-style: italic;
+    margin-bottom: 1.5rem;
+}
+
+.exp-title {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.exp-desc {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: rgba(241, 235, 225, 0.7);
+    line-height: 1.7;
+}
+
+/* Campfire flickering graphic styling */
+.campfire-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.campfire-base {
+    position: relative;
+    width: 120px;
+    height: 20px;
+    z-index: 3;
+}
+
+.stone {
+    position: absolute;
+    background-color: var(--color-stone-grey);
+    border-radius: 50%;
+    bottom: 0;
+}
+
+.stone:nth-child(1) { width: 30px; height: 18px; left: 10px; }
+.stone:nth-child(2) { width: 35px; height: 20px; left: 45px; }
+.stone:nth-child(3) { width: 28px; height: 16px; left: 80px; }
+
+.log {
+    position: absolute;
+    width: 70px;
+    height: 12px;
+    background-color: #3b2314;
+    border-radius: 6px;
+    bottom: 5px;
+}
+
+.log:nth-child(4) {
+    transform: rotate(-15deg);
+    left: 20px;
+}
+
+.log:nth-child(5) {
+    transform: rotate(20deg);
+    left: 35px;
+}
+
+.campfire-flame {
+    position: absolute;
+    width: 60px;
+    height: 90px;
+    bottom: 15px;
+    background: radial-gradient(ellipse at bottom, var(--color-golden-fire) 20%, var(--color-warm-amber) 50%, transparent 80%);
+    filter: blur(2px);
+    border-radius: 50% 50% 20% 20%;
+    animation: flameFlicker 0.15s ease infinite alternate;
+    z-index: 2;
+}
+
+.campfire-glow {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    bottom: -30px;
+    background: radial-gradient(circle, rgba(204, 111, 8, 0.4) 0%, transparent 70%);
+    filter: blur(10px);
+    animation: glowFlicker 0.3s ease infinite alternate;
+    z-index: 1;
+}
+
+@keyframes flameFlicker {
+    0% { transform: scale3d(1, 1, 1) rotate(-1deg); opacity: 0.95; }
+    100% { transform: scale3d(1.05, 1.1, 1) rotate(1deg); opacity: 1; }
+}
+
+@keyframes glowFlicker {
+    0% { transform: scale3d(0.95, 0.95, 1); opacity: 0.8; }
+    100% { transform: scale3d(1.05, 1.05, 1); opacity: 1; }
+}
+
+/* SECTION 5: SANCTUARY GATEWAY (BOOKING & INQUIRY FORM) */
+.booking-section {
+    background-color: var(--color-pine-green);
+    z-index: 3;
+    border-top: 1px solid rgba(241, 235, 225, 0.05);
+    transition: background-color 1.5s ease;
+}
+
+.booking-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 8vw;
+    align-items: center;
+}
+
+.contact-details-box {
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.booking-form-panel {
+    padding: 4rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.luxury-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2.2rem;
+    transition: opacity 0.5s ease;
+}
+
+.form-group {
+    position: relative;
+    width: 100%;
+}
+
+.form-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.8rem 0;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(241, 235, 225, 0.2);
+    color: var(--color-beige-soft);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 300;
+    transition: border-color 0.4s;
+}
+
+.form-input:focus {
+    border-color: var(--color-golden-fire);
+}
+
+.form-label {
+    position: absolute;
+    left: 0;
+    top: 0.8rem;
+    color: rgba(241, 235, 225, 0.4);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    pointer-events: none;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s;
+    transform-origin: left top;
+}
+
+/* Floating labels effect */
+.form-input:focus ~ .form-label,
+.form-input:not(:placeholder-shown) ~ .form-label,
+.form-input.select-input ~ .form-label,
+.active-label {
+    transform: translate3d(0, -1.5rem, 0) scale(0.9);
+    color: var(--color-golden-fire);
+}
+
+.input-line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: var(--color-golden-fire);
+    transition: width 0.4s ease;
+}
+
+.form-input:focus ~ .input-line {
+    width: 100%;
+}
+
+/* Custom styled select box styling */
+.select-input {
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    color: var(--color-beige-soft);
+}
+
+.select-input option {
+    background-color: var(--color-pine-green);
+    color: var(--color-beige-soft);
+    padding: 1rem;
+}
+
+.form-textarea {
+    resize: none;
+}
+
+.btn-submit {
+    align-self: flex-start;
+    margin-top: 1.5rem;
+}
+
+/* Form success message layout */
+.form-success-state {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -40%, 0);
+    width: 80%;
+    text-align: center;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.8s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.form-success-state.active {
+    display: flex;
+    opacity: 1;
+    transform: translate3d(-50%, -50%, 0);
+}
+
+.success-icon-wrap {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 1px solid var(--color-golden-fire);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-golden-fire);
+    margin-bottom: 2rem;
+    box-shadow: 0 0 30px rgba(226, 154, 43, 0.15);
+}
+
+.success-tick {
+    width: 32px;
+    height: 32px;
+}
+
+.success-heading {
+    font-size: 2.2rem;
+    color: var(--color-beige-soft);
+    margin-bottom: 1rem;
+}
+
+.success-desc {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: rgba(241, 235, 225, 0.7);
+    line-height: 1.7;
+}
+
+/* FOOTER SECTION */
+.forest-footer {
+    background-color: var(--color-forest-black);
+    padding: 8vw 6vw 4vw 6vw;
+    z-index: 3;
+    position: relative;
+    transition: background-color 1.5s ease;
+}
+
+.footer-divider {
+    width: 100%;
+    height: 1px;
+    background-color: rgba(241, 235, 225, 0.05);
+    margin-bottom: 6vw;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 8vw;
+    margin-bottom: 6vw;
+}
+
+.footer-logo {
+    font-size: 2.5rem;
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.footer-col .footer-tagline {
+    font-size: 0.9rem;
+    color: var(--color-stone-grey);
+    font-weight: 300;
+}
+
+.footer-hdr {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--color-golden-fire);
+    display: block;
+    margin-bottom: 2rem;
+}
+
+.footer-col a {
+    display: block;
+    color: rgba(241, 235, 225, 0.6);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 300;
+    margin-bottom: 1.2rem;
+    transition: var(--transition-fast);
+}
+
+.footer-col a:hover {
+    color: var(--color-beige-soft);
+    padding-left: 5px;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid rgba(241, 235, 225, 0.03);
+    padding-top: 2.5rem;
+    font-size: 0.75rem;
+    color: var(--color-stone-grey);
+    font-weight: 300;
+}
+
+.coordinates-footer {
+    letter-spacing: 0.1em;
+}
+
+/* Dynamic Cinematic Reveals (Blur-to-focus transition effect) */
+.char-reveal {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(20px);
+    transition: opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 1.5s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.char-reveal.reveal-active {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateY(0);
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 1024px) {
+    .forest-grid {
+        grid-template-columns: 1fr;
+        gap: 5rem;
+    }
+    
+    .dwellings-track {
+        gap: 3vw;
+    }
+    
+    .dwelling-card {
+        width: 45vw;
+        opacity: 1 !important;
+        transform: none !important;
+        pointer-events: all;
+    }
+    
+    .experience-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .booking-grid {
+        grid-template-columns: 1fr;
+        gap: 5rem;
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .forest-stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+
+    .quote-ribbon {
+        padding: 8vw 6vw;
+    }
+}
+
+@media (max-width: 768px) {
+    .hud-header {
+        padding: 1.5rem;
+    }
+    
+    .hud-controls {
+        gap: 1.2rem;
+    }
+    
+    .audio-label {
+        display: none;
+    }
+    
+    .hud-weather-controller {
+        display: none; /* Hide controller on very small screens to fit logo/audio */
+    }
+    
+    .nav-content {
+        grid-template-columns: 1fr;
+        padding: 0 8vw;
+        gap: 3rem;
+    }
+    
+    .nav-left {
+        border-right: none;
+        border-bottom: 1px solid rgba(241, 235, 225, 0.1);
+        padding-right: 0;
+        padding-bottom: 2rem;
+    }
+    
+    .dwelling-card {
+        width: 80vw;
+    }
+    
+    .booking-form-panel {
+        padding: 2.5rem 1.5rem;
+    }
+    
+    .form-row-2 {
+        grid-template-columns: 1fr;
+        gap: 2.2rem;
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    
+    .footer-bottom {
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
+    }
+
+    .forest-stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .stat-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .quote-ribbon {
+        padding: 12vw 5vw;
+    }
+}
+
+/* ============================================ */
+/* KABILA CINEMATIC POLISH + SEAMLESS DWELLINGS */
+/* ============================================ */
+:root {
+    --color-river-ice: #9ec7c6;
+    --color-moon-silver: #cbd2cb;
+    --color-deep-teal: #071d1c;
+    --shadow-ember: 0 24px 90px rgba(204, 111, 8, 0.2);
+}
+
+.hud-controls {
+    gap: 1.6rem;
+}
+
+.global-light-rake {
+    position: absolute;
+    inset: -20% -35%;
+    z-index: 3;
+    opacity: 0;
+    background:
+        linear-gradient(108deg,
+            transparent 0%,
+            transparent 36%,
+            rgba(255, 210, 143, 0.08) 40%,
+            rgba(158, 199, 198, 0.045) 44%,
+            transparent 52%,
+            transparent 100%);
+    mix-blend-mode: screen;
+    transform: translate3d(-8%, 0, 0) rotate(0.001deg);
+    will-change: transform, opacity;
+}
+
+.sunbeam-active .global-light-rake {
+    opacity: 1;
+    animation: kabilaLightRake 18s ease-in-out infinite alternate;
+}
+
+.valley-haze {
+    position: absolute;
+    left: -15%;
+    right: -15%;
+    bottom: -10%;
+    height: 48vh;
+    z-index: 5;
+    opacity: 0.38;
+    background:
+        linear-gradient(0deg, rgba(241, 235, 225, 0.08), transparent 70%),
+        repeating-linear-gradient(178deg,
+            rgba(241, 235, 225, 0.035) 0 1px,
+            transparent 1px 34px);
+    filter: blur(10px);
+    transform: translate3d(0, 0, 0);
+    animation: kabilaHazeDrift 36s linear infinite alternate;
+    will-change: transform;
+}
+
+@keyframes kabilaLightRake {
+    from { transform: translate3d(-8%, -2%, 0); }
+    to { transform: translate3d(8%, 2%, 0); }
+}
+
+@keyframes kabilaHazeDrift {
+    from { transform: translate3d(-3%, 0, 0); }
+    to { transform: translate3d(3%, -2%, 0); }
+}
+
+.hero-light-field,
+.hero-ground-fog,
+.hero-fire-glow {
+    position: absolute;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.hero-light-field {
+    inset: -10% -10% 0 -10%;
+    opacity: 0.62;
+    background:
+        repeating-linear-gradient(112deg,
+            transparent 0 8%,
+            rgba(252, 205, 134, 0.08) 8.5% 9.5%,
+            transparent 10% 18%),
+        linear-gradient(180deg, rgba(255, 210, 143, 0.08), transparent 55%);
+    mix-blend-mode: screen;
+    transform: translate3d(0, 0, 0);
+    animation: heroRayBreath 12s ease-in-out infinite alternate;
+}
+
+.hero-ground-fog {
+    left: -12%;
+    right: -12%;
+    bottom: -8%;
+    height: 42%;
+    opacity: 0.9;
+    background:
+        linear-gradient(0deg, rgba(5, 8, 7, 0.92), rgba(5, 8, 7, 0.25) 55%, transparent),
+        repeating-linear-gradient(174deg,
+            rgba(241, 235, 225, 0.055) 0 2px,
+            transparent 2px 44px);
+    filter: blur(8px);
+    animation: heroFogSlide 28s linear infinite alternate;
+}
+
+.hero-fire-glow {
+    left: 7vw;
+    bottom: 8vh;
+    width: min(28vw, 420px);
+    height: min(18vw, 280px);
+    opacity: 0.5;
+    background: radial-gradient(ellipse at 30% 90%,
+            rgba(226, 154, 43, 0.42) 0%,
+            rgba(204, 111, 8, 0.2) 38%,
+            transparent 72%);
+    filter: blur(18px);
+    animation: emberPulse 2.8s ease-in-out infinite alternate;
+}
+
+@keyframes heroRayBreath {
+    from { opacity: 0.45; transform: translate3d(-1.5%, -1%, 0); }
+    to { opacity: 0.72; transform: translate3d(1.5%, 1%, 0); }
+}
+
+@keyframes heroFogSlide {
+    from { transform: translate3d(-4%, 0, 0); }
+    to { transform: translate3d(4%, -2%, 0); }
+}
+
+@keyframes emberPulse {
+    from { opacity: 0.34; transform: scale3d(0.96, 0.92, 1); }
+    to { opacity: 0.58; transform: scale3d(1.04, 1.08, 1); }
+}
+
+.forest-section-light {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.55;
+    background:
+        linear-gradient(115deg, transparent 0 28%, rgba(158, 199, 198, 0.08) 31%, transparent 42%),
+        linear-gradient(245deg, transparent 0 64%, rgba(226, 154, 43, 0.07) 72%, transparent 86%);
+}
+
+.image-frame {
+    position: relative;
+}
+
+.image-frame::before,
+.image-frame::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+    z-index: 2;
+    border-radius: 10px;
+}
+
+.image-frame::before {
+    inset: 1.5rem;
+    background: linear-gradient(115deg, rgba(252, 205, 134, 0.16), transparent 42%);
+    mix-blend-mode: screen;
+}
+
+.image-frame::after {
+    left: 1.5rem;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    height: 34%;
+    background: linear-gradient(0deg, rgba(241, 235, 225, 0.08), transparent);
+    filter: blur(8px);
+}
+
+.living-forest-ridge,
+.living-forest-canopy {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.living-forest-ridge {
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 42%;
+    background:
+        linear-gradient(180deg, transparent, rgba(5, 8, 7, 0.72)),
+        linear-gradient(135deg, transparent 0 50%, rgba(13, 40, 35, 0.8) 50% 62%, transparent 62%),
+        linear-gradient(205deg, transparent 0 48%, rgba(28, 54, 42, 0.5) 48% 59%, transparent 59%);
+    opacity: 0.72;
+}
+
+.living-forest-canopy {
+    inset: 0;
+    opacity: 0.28;
+    background:
+        repeating-linear-gradient(90deg,
+            transparent 0 68px,
+            rgba(158, 199, 198, 0.05) 68px 70px,
+            transparent 70px 132px);
+    mask-image: linear-gradient(180deg, #000 0%, transparent 65%);
+}
+
+.stat-card {
+    border-radius: 10px;
+}
+
+.stat-card::after,
+.exp-text-block::after,
+.booking-form-panel::after {
+    content: '';
+    position: absolute;
+    left: 1.1rem;
+    right: 1.1rem;
+    top: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(226, 154, 43, 0.42), transparent);
+    opacity: 0.55;
+}
+
+.stat-card,
+.exp-text-block,
+.booking-form-panel {
+    position: relative;
+    overflow: hidden;
+}
+
+.quote-content::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: min(68vw, 760px);
+    height: min(24vw, 260px);
+    transform: translate3d(-50%, -50%, 0);
+    background:
+        linear-gradient(90deg, transparent, rgba(158, 199, 198, 0.07), transparent),
+        repeating-linear-gradient(0deg,
+            transparent 0 23px,
+            rgba(226, 154, 43, 0.045) 23px 24px,
+            transparent 24px 48px);
+    filter: blur(6px);
+    opacity: 0.5;
+    z-index: -1;
+}
+
+.slider-section {
+    background:
+        linear-gradient(180deg, rgba(7, 29, 28, 0.92), rgba(13, 22, 18, 0.96) 48%, rgba(5, 8, 7, 0.98)),
+        url('assets/camp_sunlight.png');
+    background-size: cover;
+    background-position: center;
+    isolation: isolate;
+}
+
+.slider-section::before,
+.slider-section::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.slider-section::before {
+    inset: 0;
+    background:
+        linear-gradient(110deg, transparent 0 36%, rgba(252, 205, 134, 0.1) 43%, transparent 52%),
+        linear-gradient(0deg, rgba(5, 8, 7, 0.72), transparent 52%, rgba(5, 8, 7, 0.42));
+    mix-blend-mode: screen;
+    opacity: 0.55;
+}
+
+.slider-section::after {
+    left: -10%;
+    right: -10%;
+    bottom: 12%;
+    height: 24vh;
+    background: repeating-linear-gradient(176deg,
+        rgba(241, 235, 225, 0.06) 0 2px,
+        transparent 2px 46px);
+    filter: blur(9px);
+    opacity: 0.32;
+    animation: dwellingsMistFloat 24s ease-in-out infinite alternate;
+}
+
+.dwellings-ambient {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.dwellings-ambient-a {
+    top: 9%;
+    right: -10%;
+    width: min(42vw, 680px);
+    height: min(26vw, 400px);
+    background: radial-gradient(ellipse at 35% 50%, rgba(226, 154, 43, 0.18), transparent 68%);
+    filter: blur(22px);
+}
+
+.dwellings-ambient-b {
+    left: -12%;
+    bottom: 18%;
+    width: min(44vw, 720px);
+    height: min(20vw, 340px);
+    background: radial-gradient(ellipse at 52% 50%, rgba(158, 199, 198, 0.15), transparent 70%);
+    filter: blur(24px);
+}
+
+@keyframes dwellingsMistFloat {
+    from { transform: translate3d(-3%, 0, 0); }
+    to { transform: translate3d(3%, -8px, 0); }
+}
+
+.dwellings-header {
+    position: relative;
+    z-index: 3;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 430px);
+    align-items: end;
+    gap: clamp(2rem, 6vw, 6rem);
+    margin-bottom: clamp(2rem, 4vw, 4.5rem);
+}
+
+.dwellings-title-copy {
+    max-width: 760px;
+}
+
+.dwellings-weather-hint,
+.dwelling-weather-hint {
+    max-width: 36rem;
+}
+
+.dwellings-season-panel {
+    justify-self: end;
+    width: 100%;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-ember);
+}
+
+.season-eyebrow {
+    display: block;
+    margin-bottom: 0.8rem;
+    color: var(--color-river-ice);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+}
+
+.dwellings-weather-controller {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.35rem;
+    border-radius: 999px;
+    background: rgba(5, 8, 7, 0.42);
+}
+
+.dwellings-weather-controller .mood-btn {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding-inline: 0.75rem;
+}
+
+.season-note {
+    margin-top: 0.85rem;
+    color: rgba(241, 235, 225, 0.58);
+    font-size: 0.78rem;
+    font-weight: 300;
+    line-height: 1.6;
+}
+
+.dwellings-slider-container {
+    z-index: 3;
+    width: calc(100% + 12vw);
+    margin-left: -6vw;
+    margin-right: -6vw;
+    padding: 1.4rem 0 1.2rem;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.dwellings-slider-container::before,
+.dwellings-slider-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: min(16vw, 220px);
+    z-index: 4;
+    pointer-events: none;
+}
+
+.dwellings-slider-container::before {
+    left: 0;
+    background: linear-gradient(90deg, rgba(7, 18, 16, 0.98), transparent);
+}
+
+.dwellings-slider-container::after {
+    right: 0;
+    background: linear-gradient(270deg, rgba(7, 18, 16, 0.98), transparent);
+}
+
+.dwellings-track {
+    align-items: stretch;
+    gap: clamp(18px, 2.2vw, 34px);
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+}
+
+.dwelling-card {
+    flex: 0 0 clamp(300px, 29vw, 470px);
+    width: clamp(300px, 29vw, 470px);
+    min-height: 100%;
+    border-radius: 12px;
+    opacity: 0.72;
+    transform: scale(0.965);
+    pointer-events: all;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.26);
+    transition: opacity 0.55s ease, transform 0.55s ease, box-shadow 0.55s ease, border-color 0.55s ease;
+}
+
+.dwelling-card.active {
+    opacity: 1;
+    transform: scale(1);
+    border-color: rgba(226, 154, 43, 0.3);
+    box-shadow: 0 32px 90px rgba(0, 0, 0, 0.42), 0 0 42px rgba(226, 154, 43, 0.08);
+}
+
+.dwelling-card:not(.active) .card-weather-label {
+    opacity: 0.55;
+}
+
+.card-img-wrap::before,
+.card-img-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    border-radius: 8px;
+}
+
+.card-img-wrap::before {
+    background: linear-gradient(125deg, rgba(252, 205, 134, 0.16), transparent 42%);
+    mix-blend-mode: screen;
+}
+
+.card-img-wrap::after {
+    top: auto;
+    height: 45%;
+    background: linear-gradient(0deg, rgba(5, 8, 7, 0.58), transparent);
+}
+
+.card-meta {
+    gap: 1rem;
+}
+
+.dwelling-price {
+    white-space: nowrap;
+}
+
+.slider-nav {
+    position: relative;
+    z-index: 5;
+    margin-top: 3.2rem;
+}
+
+.slider-arrow:hover {
+    box-shadow: 0 0 22px rgba(226, 154, 43, 0.18);
+}
+
+.experience-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.24;
+    background:
+        linear-gradient(180deg, rgba(5, 8, 7, 0.35), rgba(5, 8, 7, 0.85)),
+        url('assets/camp_night.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.campfire-container {
+    filter: drop-shadow(0 0 34px rgba(226, 154, 43, 0.34));
+}
+
+.booking-section {
+    background:
+        linear-gradient(90deg, rgba(5, 8, 7, 0.92), rgba(13, 22, 18, 0.78)),
+        url('assets/chalet.png');
+    background-size: cover;
+    background-position: center right;
+}
+
+.booking-info-panel,
+.booking-form-panel {
+    position: relative;
+    z-index: 2;
+}
+
+body.rain-active .global-light-rake,
+body.snow-active .global-light-rake,
+body.silence-active .global-light-rake {
+    opacity: 0;
+}
+
+body.rain-active .valley-haze {
+    opacity: 0.6;
+    filter: blur(13px);
+}
+
+body.snow-active .valley-haze {
+    opacity: 0.72;
+    filter: blur(11px);
+}
+
+body.silence-active .hero-light-field,
+body.silence-active .hero-fire-glow {
+    opacity: 0.38;
+}
+
+@media (max-width: 1024px) {
+    .dwellings-header {
+        grid-template-columns: 1fr;
+        align-items: start;
+    }
+
+    .dwellings-season-panel {
+        justify-self: stretch;
+        max-width: 520px;
+    }
+
+    .dwelling-card {
+        flex-basis: clamp(320px, 46vw, 470px);
+        width: clamp(320px, 46vw, 470px);
+        opacity: 0.78 !important;
+        transform: scale(0.98) !important;
+    }
+
+    .dwelling-card.active {
+        opacity: 1 !important;
+        transform: scale(1) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-fire-glow {
+        left: 0;
+        width: 70vw;
+        height: 40vw;
+    }
+
+    .dwellings-weather-controller {
+        border-radius: 18px;
+        flex-wrap: wrap;
+    }
+
+    .dwellings-weather-controller .mood-btn {
+        flex-basis: calc(50% - 0.2rem);
+    }
+
+    .dwellings-slider-container {
+        width: calc(100% + 10vw);
+        margin-left: -5vw;
+        margin-right: -5vw;
+    }
+
+    .dwellings-slider-container::before,
+    .dwellings-slider-container::after {
+        width: 9vw;
+    }
+
+    .dwelling-card {
+        flex-basis: 82vw;
+        width: 82vw;
+        padding: 1rem;
+    }
+
+    .card-meta {
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+
+    .card-title {
+        font-size: 1.9rem;
+    }
+
+    .slider-nav {
+        gap: 1.6rem;
+    }
+
+    .slider-arrow {
+        width: 44px;
+        height: 44px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .global-light-rake,
+    .valley-haze,
+    .hero-light-field,
+    .hero-ground-fog,
+    .hero-fire-glow,
+    .dwellings-ambient,
+    .slider-section::after {
+        animation: none !important;
+    }
+
+    .dwellings-track {
+        transform: none !important;
+    }
+}

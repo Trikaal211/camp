@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kabila Camps - An ultra-luxury glamping sanctuary nestled beside a Himalayan river in Kasol, Himachal Pradesh. Escaping civilization into untouched wilderness.">
+    <title>Kabila Camps | Himalayan Luxury Sanctuary</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Styling -->
+    <link rel="preload" as="image" href="assets/hero.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Fallback Audio Assets for Sensory Engine -->
+    <audio id="ambient-rain" loop preload="none" src="https://www.soundjay.com/nature/sounds/rain-07.mp3"></audio>
+    <audio id="ambient-snow" loop preload="none" src="https://www.soundjay.com/nature/sounds/wind-howl-01.mp3"></audio>
+    <audio id="ambient-birds" loop preload="none" src="https://www.soundjay.com/nature/sounds/birds-chirping-01.mp3"></audio>
+    <audio id="ambient-silence" loop preload="none" src="https://www.soundjay.com/nature/sounds/river-1.mp3"></audio>
+
+    <!-- Intro Sanctuary Gate -->
+    <div id="sanctuary-gate" class="gate-overlay">
+        <div class="gate-content">
+            <span class="gate-subtitle">SANCTUARY IN THE HIMALAYAS</span>
+            <h1 class="gate-title">Kabila Camps</h1>
+            <p class="gate-tagline">Kasol, Himachal Pradesh</p>
+            <button id="btn-enter" class="btn-luxury">
+                <span class="btn-txt">Step Into the Forest</span>
+                <span class="btn-border"></span>
+            </button>
+            <span class="gate-footnote">Sound recommended for full immersion</span>
+        </div>
+        <div class="gate-bg-mist"></div>
+    </div>
+
+    <!-- Main HUD (Heads-Up-Display) -->
+    <header class="hud-header">
+        <div class="hud-logo">
+            <a href="#" class="logo-link">Kabila</a>
+        </div>
+        <div class="hud-controls">
+            <!-- Audio Toggle Visualizer -->
+            <button id="audio-control" class="audio-btn" aria-label="Toggle ambient forest soundscape">
+                <div class="sound-wave">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+                <span class="audio-label">Ambient Sound</span>
+            </button>
+            
+            <!-- Book Now Quick Link -->
+            <a href="#sanctuary-gateway" class="hud-book-btn">
+                <span>Inquire</span>
+            </a>
+
+            <!-- Immersive Menu Toggle -->
+            <button id="menu-toggle" class="menu-btn" aria-label="Toggle Menu">
+                <span class="menu-line top"></span>
+                <span class="menu-line bottom"></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Fullscreen Immersive Nav Menu -->
+    <div id="immersive-nav" class="nav-overlay">
+        <div class="nav-bg-image"></div>
+        <div class="nav-content">
+            <div class="nav-left">
+                <span class="nav-label">COORDINATES</span>
+                <p class="nav-coordinates">32.0098° N, 77.3150° E<br>Kasol, Himachal Pradesh</p>
+                <div class="nav-weather mb-4">
+                    <span class="nav-label">CURRENT TEMPERATURE</span>
+                    <p id="temp-display">18°C <span class="temp-sub">Rainforest Breeze</span></p>
+                </div>
+                <!-- Simulated Live Forest telemetry statistics -->
+                <div class="live-forest-indicators">
+                    <span class="nav-label">FOREST VITAL SIGNS</span>
+                    <div class="indicator-row">
+                        <span class="ind-lbl">Silence Index:</span>
+                        <span class="ind-val text-green" id="ind-silence">98% (Absolute)</span>
+                    </div>
+                    <div class="indicator-row">
+                        <span class="ind-lbl">Soil Moisture:</span>
+                        <span class="ind-val" id="ind-moisture">72% (Cedar Sap)</span>
+                    </div>
+                    <div class="indicator-row">
+                        <span class="ind-lbl">Wind Gusts:</span>
+                        <span class="ind-val" id="ind-wind">3 km/h (West)</span>
+                    </div>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="#canopy-hero" class="nav-item" data-index="01"><span>The Canopy</span></a>
+                <a href="#whispering-woods" class="nav-item" data-index="02"><span>Philosophy</span></a>
+                <a href="#living-forest" class="nav-item" data-index="03"><span>The Forest</span></a>
+                <a href="#river-dwellings" class="nav-item" data-index="04"><span>Dwellings</span></a>
+                <a href="#glowing-hearth" class="nav-item" data-index="05"><span>Experiences</span></a>
+                <a href="#sanctuary-gateway" class="nav-item" data-index="06"><span>Inquire</span></a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Scroll Container -->
+    <div id="scroll-wrapper">
+        
+        <!-- Background Canvases and Fixed Elements -->
+        <div class="fixed-overlay-container">
+            <div class="film-grain"></div>
+            <div class="sunbeam-overlay"></div>
+            <div class="global-light-rake"></div>
+            <div class="valley-haze"></div>
+            <div class="rain-overlay"></div>
+            <div class="snow-overlay"></div>
+            <canvas id="weather-canvas"></canvas>
+            <div class="fog-layer fog-layer-1 parallax-bg" data-depth="0.15"></div>
+            <div class="fog-layer fog-layer-2 parallax-bg" data-depth="0.3"></div>
+        </div>
+
+        <!-- SECTION 1: THE CANOPY (HERO) -->
+        <section id="canopy-hero" class="forest-section hero-section">
+            <!-- Layers of background for cursor parallax effect -->
+            <div class="hero-bg parallax-bg" data-depth="0.08" style="background-image: url('assets/hero.png');"></div>
+            <div class="hero-gradient-overlay"></div>
+            <div class="hero-light-field"></div>
+            <div class="hero-ground-fog"></div>
+            <div class="hero-fire-glow"></div>
+            
+            <div class="hero-content">
+                <div class="parallax-element title-wrapper">
+                    <span class="section-tag">THE DESCENT</span>
+                    <h2 class="serif-title main-hero-title">Escape<br><span class="italic">Civilization.</span></h2>
+                </div>
+                <div class="hero-footer-details">
+                    <div class="coord-tag">32.0098° N, 77.3150° E</div>
+                    <div class="scroll-prompt" id="scroll-prompt">
+                        <span class="scroll-txt">Walk Deeper</span>
+                        <div class="scroll-indicator">
+                            <span class="scroll-dot"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: THE WHISPERING WOODS (PHILOSOPHY) -->
+        <section id="whispering-woods" class="forest-section text-section">
+            <div class="section-bg-dim"></div>
+            <div class="forest-section-light"></div>
+            <div class="forest-grid">
+                <div class="grid-left parallax-element" data-speed="-0.08">
+                    <div class="image-frame glass-panel">
+                        <img src="assets/forest_path.png" alt="Misty Himalayan pathway through pine trees" class="parallax-img" loading="lazy" decoding="async">
+                    </div>
+                </div>
+                <div class="grid-right">
+                    <span class="section-tag">01 / SILENCE</span>
+                    <h3 class="serif-title section-title">Where giant cedar trees shield the mind.</h3>
+                    <p class="body-text">
+                        Kabila Camps is not a stay. It is an evacuation. Nestled in a primeval cedar forest beside the untamed Parvati River, we offer absolute isolation wrapped in refined luxury.
+                    </p>
+                    <p class="body-text secondary">
+                        No sirens. No streets. Only the steady rush of glacial water, the whisper of old growth pines, and the crackle of ancient stone fires. Here, you remember what it feels like to be human.
+                    </p>
+                    <div class="coords-box glass-panel">
+                        <span class="panel-tag">ELEVATION</span>
+                        <p class="panel-value">1,580 METERS</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CINEMATIC QUOTE RIBBON -->
+        <section class="quote-ribbon">
+            <div class="quote-content">
+                <span class="quote-mark">"</span>
+                <blockquote class="quote-text serif-title char-reveal">
+                    The forest does not judge, it does not rush, it simply exists — and invites you to do the same.
+                </blockquote>
+                <span class="quote-author">— The Keepers of Kabila</span>
+            </div>
+        </section>
+
+        <!-- SECTION 2.5: THE LIVING FOREST (ANIMATED STATS) -->
+        <section id="living-forest" class="forest-section living-forest-section">
+            <div class="living-forest-bg"></div>
+            <div class="living-forest-ridge"></div>
+            <div class="living-forest-canopy"></div>
+            <div class="living-forest-content">
+                <span class="section-tag">THE LIVING FOREST</span>
+                <h3 class="serif-title section-title char-reveal">A Sanctuary That Breathes</h3>
+                
+                <div class="forest-stats-grid">
+                    <div class="stat-card glass-panel char-reveal">
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 40 40"><path d="M20 2c-3 5-10 10-10 18a10 10 0 0020 0C30 12 23 7 20 2z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+                        </div>
+                        <span class="stat-number" data-target="847" data-suffix="">0</span>
+                        <span class="stat-label">Ancient Cedar Trees</span>
+                        <p class="stat-desc">Within our 12-acre sanctuary</p>
+                    </div>
+
+                    <div class="stat-card glass-panel char-reveal">
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 40 40"><circle cx="20" cy="14" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 38c0-7 5-12 12-12s12 5 12 12" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+                        </div>
+                        <span class="stat-number" data-target="127" data-suffix="">0</span>
+                        <span class="stat-label">Wildlife Species</span>
+                        <p class="stat-desc">Documented in our valley</p>
+                    </div>
+
+                    <div class="stat-card glass-panel char-reveal">
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 40 40"><path d="M20 5v30M5 20h30M10 10l20 20M30 10L10 30" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+                        </div>
+                        <span class="stat-number" data-target="0" data-suffix=" dB" data-actual="12">0</span>
+                        <span class="stat-label">Noise Level</span>
+                        <p class="stat-desc">12 dB — near absolute silence</p>
+                    </div>
+
+                    <div class="stat-card glass-panel char-reveal">
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 40 40"><path d="M6 28c2-4 6-8 14-8s12 4 14 8" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M14 28c1-3 3-5 6-5s5 2 6 5" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="20" y1="28" x2="20" y2="36" stroke="currentColor" stroke-width="1.5"/></svg>
+                        </div>
+                        <span class="stat-number" data-target="1580" data-suffix=" m">0</span>
+                        <span class="stat-label">Above Sea Level</span>
+                        <p class="stat-desc">Parvati Valley, Himachal</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: THE RIVER DWELLINGS (WEATHER-REACTIVE SLIDER) -->
+        <section id="river-dwellings" class="forest-section slider-section">
+            <div class="dwellings-ambient dwellings-ambient-a"></div>
+            <div class="dwellings-ambient dwellings-ambient-b"></div>
+            <div class="section-header-block dwellings-header">
+                <div class="dwellings-title-copy">
+                    <span class="section-tag">02 / THE DWELLINGS</span>
+                    <h3 class="serif-title section-title char-reveal">Shelters for the Restless Soul</h3>
+                    <p class="dwelling-weather-hint char-reveal">
+                        No empty pause, no hard edge. The shelters keep drifting like a warm trail through the Kasol forest.
+                    </p>
+                </div>
+                <div class="dwellings-season-panel glass-panel char-reveal">
+                    <span class="season-eyebrow">Season Lens</span>
+                    <div class="hud-weather-controller dwellings-weather-controller" aria-label="Change dwelling weather">
+                        <button class="mood-btn active" data-mood="sunbeam" aria-label="Morning Sunbeam">Dhoop</button>
+                        <button class="mood-btn" data-mood="rain" aria-label="Misty Rain">Varish</button>
+                        <button class="mood-btn" data-mood="snow" aria-label="Soft Snowfall">Barf</button>
+                        <button class="mood-btn" data-mood="silence" aria-label="Midnight Silence">Sanataa</button>
+                    </div>
+                    <p class="season-note">
+                        Tap a mood and every dwelling changes light, weather, image, and forest sound together.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="dwellings-slider-container">
+                <div class="dwellings-track">
+                    
+                    <!-- [CLONE] Card 3: Forest Hideaway (Prepended for infinite loop) -->
+                    <div class="dwelling-card glass-panel card-clone" data-index="2">
+                        <div class="card-img-wrap">
+                            <img class="card-img-weather" loading="lazy" decoding="async"
+                                 src="assets/camp_hideaway_sun.png" 
+                                 data-sunbeam="assets/camp_hideaway_sun.png"
+                                 data-rain="assets/camp_hideaway_rain.png"
+                                 data-snow="assets/camp_hideaway_snow.png"
+                                 data-silence="assets/camp_night.png"
+                                 alt="Forest Hideaway glamping tent at Kabila">
+                            <div class="card-weather-overlay"></div>
+                            <div class="card-weather-label">
+                                <span class="cwl-dot"></span>
+                                <span class="cwl-text">DHOOP</span>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-meta">
+                                <span class="dwelling-type">ORGANIC CANVAS</span>
+                                <span class="dwelling-price">From ₹28,000 / Night</span>
+                            </div>
+                            <h4 class="card-title serif-title">The Forest Hideaway</h4>
+                            <p class="card-desc">
+                                Tucked away in a private hollow of moss and boulders. Deeply isolated, with an open-air stone copper bath and private glowing hearth.
+                            </p>
+                            <a href="#sanctuary-gateway" class="btn-card-action">
+                                <span>Reserve Sanctuary</span>
+                                <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- [REAL] Card 1: Geodesic Dome -->
+                    <div class="dwelling-card active glass-panel" data-index="0">
+                        <div class="card-img-wrap">
+                            <img class="card-img-weather" loading="lazy" decoding="async"
+                                 src="assets/camp_sunlight.png" 
+                                 data-sunbeam="assets/camp_sunlight.png"
+                                 data-rain="assets/camp_rain.png"
+                                 data-snow="assets/camp_snow.png"
+                                 data-silence="assets/camp_night.png"
+                                 alt="Riverside Geodesic Dome at Kabila">
+                            <div class="card-weather-overlay"></div>
+                            <div class="card-weather-label">
+                                <span class="cwl-dot"></span>
+                                <span class="cwl-text">DHOOP</span>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-meta">
+                                <span class="dwelling-type">CANVAS & GLASS</span>
+                                <span class="dwelling-price">From ₹35,000 / Night</span>
+                            </div>
+                            <h4 class="card-title serif-title">The Riverside Geodesic</h4>
+                            <p class="card-desc">
+                                Suspended on a dark timber deck directly over the water. Watch the mist rise from the Parvati River from the warmth of your plush bed.
+                            </p>
+                            <a href="#sanctuary-gateway" class="btn-card-action">
+                                <span>Reserve Sanctuary</span>
+                                <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- [REAL] Card 2: Cedar Chalet -->
+                    <div class="dwelling-card glass-panel" data-index="1">
+                        <div class="card-img-wrap">
+                            <img class="card-img-weather" loading="lazy" decoding="async"
+                                 src="assets/geodesic.png" 
+                                 data-sunbeam="assets/geodesic.png"
+                                 data-rain="assets/camp_chalet_rain.png"
+                                 data-snow="assets/camp_chalet_snow.png"
+                                 data-silence="assets/camp_night.png"
+                                 alt="Cedar Chalet at Kabila">
+                            <div class="card-weather-overlay"></div>
+                            <div class="card-weather-label">
+                                <span class="cwl-dot"></span>
+                                <span class="cwl-text">DHOOP</span>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-meta">
+                                <span class="dwelling-type">RECLAIMED WOOD</span>
+                                <span class="dwelling-price">From ₹52,000 / Night</span>
+                            </div>
+                            <h4 class="card-title serif-title">The Cedar Chalet</h4>
+                            <p class="card-desc">
+                                Crafted from ancient fallen cedar timber. High floor-to-ceiling glass paneling grants total integration with the surrounding giant pines.
+                            </p>
+                            <a href="#sanctuary-gateway" class="btn-card-action">
+                                <span>Reserve Sanctuary</span>
+                                <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- [REAL] Card 3: Forest Hideaway -->
+                    <div class="dwelling-card glass-panel" data-index="2">
+                        <div class="card-img-wrap">
+                            <img class="card-img-weather" loading="lazy" decoding="async"
+                                 src="assets/camp_hideaway_sun.png" 
+                                 data-sunbeam="assets/camp_hideaway_sun.png"
+                                 data-rain="assets/camp_hideaway_rain.png"
+                                 data-snow="assets/camp_hideaway_snow.png"
+                                 data-silence="assets/camp_night.png"
+                                 alt="Forest Hideaway glamping tent at Kabila">
+                            <div class="card-weather-overlay"></div>
+                            <div class="card-weather-label">
+                                <span class="cwl-dot"></span>
+                                <span class="cwl-text">DHOOP</span>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-meta">
+                                <span class="dwelling-type">ORGANIC CANVAS</span>
+                                <span class="dwelling-price">From ₹28,000 / Night</span>
+                            </div>
+                            <h4 class="card-title serif-title">The Forest Hideaway</h4>
+                            <p class="card-desc">
+                                Tucked away in a private hollow of moss and boulders. Deeply isolated, with an open-air stone copper bath and private glowing hearth.
+                            </p>
+                            <a href="#sanctuary-gateway" class="btn-card-action">
+                                <span>Reserve Sanctuary</span>
+                                <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- [CLONE] Card 1: Geodesic Dome (Appended for infinite loop) -->
+                    <div class="dwelling-card glass-panel card-clone" data-index="0">
+                        <div class="card-img-wrap">
+                            <img class="card-img-weather" loading="lazy" decoding="async"
+                                 src="assets/camp_sunlight.png" 
+                                 data-sunbeam="assets/camp_sunlight.png"
+                                 data-rain="assets/camp_rain.png"
+                                 data-snow="assets/camp_snow.png"
+                                 data-silence="assets/camp_night.png"
+                                 alt="Riverside Geodesic Dome at Kabila">
+                            <div class="card-weather-overlay"></div>
+                            <div class="card-weather-label">
+                                <span class="cwl-dot"></span>
+                                <span class="cwl-text">DHOOP</span>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-meta">
+                                <span class="dwelling-type">CANVAS & GLASS</span>
+                                <span class="dwelling-price">From ₹35,000 / Night</span>
+                            </div>
+                            <h4 class="card-title serif-title">The Riverside Geodesic</h4>
+                            <p class="card-desc">
+                                Suspended on a dark timber deck directly over the water. Watch the mist rise from the Parvati River from the warmth of your plush bed.
+                            </p>
+                            <a href="#sanctuary-gateway" class="btn-card-action">
+                                <span>Reserve Sanctuary</span>
+                                <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <div class="slider-nav">
+                    <button class="slider-arrow prev" aria-label="Previous room">
+                        <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+                    </button>
+                    <div class="slider-dots">
+                        <span class="slider-dot active" data-index="0"></span>
+                        <span class="slider-dot" data-index="1"></span>
+                        <span class="slider-dot" data-index="2"></span>
+                    </div>
+                    <button class="slider-arrow next" aria-label="Next room">
+                        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: THE GLOWING HEARTH (EXPERIENCES) -->
+        <section id="glowing-hearth" class="forest-section experience-section">
+            <div class="experience-bg-glow"></div>
+            
+            <div class="experience-content">
+                <span class="section-tag">03 / FOREST RITUALS</span>
+                <h3 class="serif-title section-title char-reveal">Into the Embers</h3>
+                
+                <div class="experience-grid">
+                    
+                    <div class="exp-text-block glass-panel parallax-element" data-speed="0.05">
+                        <span class="exp-number">01</span>
+                        <h4 class="serif-title exp-title">Riverfront Firefly Dinners</h4>
+                        <p class="exp-desc">
+                            A wooden table set on river stones under floating warm lanterns. Savor curated Himalayan recipes infused with wild forest herbs while fireflies circle above.
+                        </p>
+                    </div>
+
+                    <div class="exp-text-block glass-panel parallax-element" data-speed="-0.03">
+                        <span class="exp-number">02</span>
+                        <h4 class="serif-title exp-title">Thermal Hot Springs</h4>
+                        <p class="exp-desc">
+                            Soak in hot natural mineral springs hidden deep within pine-scented rock alcoves. Steam rising into the crisp forest air, soothing the physical body.
+                        </p>
+                    </div>
+
+                    <div class="exp-text-block glass-panel parallax-element" data-speed="0.02">
+                        <span class="exp-number">03</span>
+                        <h4 class="serif-title exp-title">Guided Forest Bathing</h4>
+                        <p class="exp-desc">
+                            A silent journey led by a naturalist along damp moss-covered pathways. Learn the language of the giant cedar trees and inhale the phytoncides of old-growth forest.
+                        </p>
+                    </div>
+                    
+                </div>
+                
+                <!-- Interactive Glow Campfire Element -->
+                <div class="campfire-container">
+                    <div class="campfire-base">
+                        <span class="stone"></span>
+                        <span class="stone"></span>
+                        <span class="stone"></span>
+                        <span class="log"></span>
+                        <span class="log"></span>
+                    </div>
+                    <div class="campfire-glow"></div>
+                    <div class="campfire-flame"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECOND QUOTE RIBBON -->
+        <section class="quote-ribbon quote-ribbon-dark">
+            <div class="quote-content">
+                <span class="quote-mark">"</span>
+                <blockquote class="quote-text serif-title char-reveal">
+                    In the silence between the river and the pines, you'll hear a sound you forgot existed — your own heartbeat.
+                </blockquote>
+                <span class="quote-author">— A Guest, December 2025</span>
+            </div>
+        </section>
+
+        <!-- SECTION 5: SANCTUARY GATEWAY (BOOKING & RESERVATION) -->
+        <section id="sanctuary-gateway" class="forest-section booking-section">
+            <div class="booking-grid">
+                
+                <div class="booking-info-panel">
+                    <span class="section-tag">INQUIRY</span>
+                    <h3 class="serif-title section-title char-reveal">Initiate Your Evacuation</h3>
+                    <p class="body-text">
+                        Kabila is highly exclusive, operating only 8 private dwellings. We accept guests selectively through our inquiry framework to protect the tranquility of the forest.
+                    </p>
+                    <p class="body-text secondary">
+                        Please indicate your preferred dates and tell us a bit about what draws you to the wilderness.
+                    </p>
+                    <div class="contact-details-box">
+                        <p class="coord-tag">RESERVATIONS@KABILACAMPS.COM</p>
+                        <p class="coord-tag">+91 98765 43210</p>
+                    </div>
+                </div>
+
+                <div class="booking-form-panel glass-panel">
+                    <form id="inquiry-form" class="luxury-form">
+                        
+                        <div class="form-group">
+                            <input type="text" id="form-name" required placeholder=" " class="form-input">
+                            <label for="form-name" class="form-label">FULL NAME</label>
+                            <span class="input-line"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" id="form-email" required placeholder=" " class="form-input">
+                            <label for="form-email" class="form-label">EMAIL ADDRESS</label>
+                            <span class="input-line"></span>
+                        </div>
+
+                        <div class="form-row-2">
+                            <div class="form-group">
+                                <input type="date" id="form-checkin" required class="form-input text-upper">
+                                <label for="form-checkin" class="form-label active-label">ARRIVAL</label>
+                                <span class="input-line"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="date" id="form-checkout" required class="form-input text-upper">
+                                <label for="form-checkout" class="form-label active-label">DEPARTURE</label>
+                                <span class="input-line"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <select id="form-dwelling" required class="form-input select-input">
+                                <option value="" disabled selected hidden>Select your shelter</option>
+                                <option value="geodesic">The Riverside Geodesic</option>
+                                <option value="chalet">The Cedar Chalet</option>
+                                <option value="hideaway">The Forest Hideaway</option>
+                            </select>
+                            <label for="form-dwelling" class="form-label active-label">CHOSEN DWELLING</label>
+                            <span class="input-line"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <textarea id="form-message" rows="3" placeholder=" " class="form-input form-textarea"></textarea>
+                            <label for="form-message" class="form-label">YOUR WILDERNESS INTENT</label>
+                            <span class="input-line"></span>
+                        </div>
+
+                        <button type="submit" class="btn-luxury btn-submit">
+                            <span class="btn-txt">Submit Inquiry</span>
+                            <span class="btn-border"></span>
+                        </button>
+                    </form>
+
+                    <!-- Success State (Hidden initially) -->
+                    <div id="form-success" class="form-success-state">
+                        <div class="success-icon-wrap">
+                            <svg class="success-tick" viewBox="0 0 24 24">
+                                <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h4 class="serif-title success-heading">Inquiry Transmitted</h4>
+                        <p class="success-desc">
+                            The sound of our drums signals your approach. Our forest concierge will reach out to you within one moon cycle.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="forest-footer">
+            <div class="footer-divider"></div>
+            <div class="footer-grid">
+                <div class="footer-col logo-col">
+                    <span class="footer-logo serif-title">Kabila</span>
+                    <p class="footer-tagline">Beside the Parvati River, Kasol, HP</p>
+                </div>
+                <div class="footer-col links-col">
+                    <span class="footer-hdr">NAVIGATION</span>
+                    <a href="#canopy-hero">The Canopy</a>
+                    <a href="#whispering-woods">Philosophy</a>
+                    <a href="#living-forest">The Forest</a>
+                    <a href="#river-dwellings">Dwellings</a>
+                    <a href="#glowing-hearth">Experiences</a>
+                </div>
+                <div class="footer-col legal-col">
+                    <span class="footer-hdr">LEGAL SANCTUARY</span>
+                    <a href="#">Privacy Wilderness</a>
+                    <a href="#">Guest Terms</a>
+                    <a href="#">Forest Conservation</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Kabila Camps. Designed for the Silent Few.</p>
+                <p class="coordinates-footer">32° 0' 35.28'' N, 77° 18' 54'' E</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- CDNs: Lenis, GSAP, ScrollTrigger -->
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    
+    <!-- Custom Application Logic -->
+    <script src="app.js"></script>
+</body>
+</html>
