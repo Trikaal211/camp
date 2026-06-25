@@ -143,6 +143,20 @@ body {
     z-index: 10;
 }
 
+/* Jungle Leaf Canopy Texture — subtle organic grain across every section */
+.jungle-leaf-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.07;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cg fill='%23173420'%3E%3Cpath d='M20 130C20 80 65 30 115 25C95 65 65 100 20 130Z'/%3E%3Cpath d='M210 50C235 75 235 110 210 135C198 110 198 75 210 50Z'/%3E%3Cpath d='M70 200C105 188 145 205 158 240C120 242 85 232 70 200Z'/%3E%3Cpath d='M190 190C220 200 235 225 230 255C200 250 178 228 190 190Z'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 320px 320px;
+    z-index: 9;
+}
+
 /* Sunbeam Gradients (Dhoop) */
 .sunbeam-overlay {
     position: absolute;
@@ -540,7 +554,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(135deg, rgba(8, 12, 10, 0.95), rgba(13, 22, 18, 0.9)), url('assets/forest_path.png');
+    background-image: linear-gradient(135deg, rgba(8, 12, 10, 0.95), rgba(13, 22, 18, 0.9)), url('assets/forest_path.webp');
     background-size: cover;
     background-position: center;
     opacity: 0.15;
@@ -1291,6 +1305,208 @@ body.silence-active .cwl-dot { background: #a88c5e; }
     transform: scale(1.5);
 }
 
+/* SECTION 3.5: THE JUNGLE ROOMS (PHOTO GALLERY) */
+.jungle-rooms-section {
+    background-color: var(--color-moss-dark);
+    z-index: 3;
+    padding-bottom: 9vw;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 1.5s ease;
+}
+
+.jungle-rooms-bg-glow {
+    position: absolute;
+    top: -12vw;
+    right: -10vw;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, rgba(94, 145, 96, 0.16) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.leaf-canopy-edge {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 12vw;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.7;
+}
+
+.leaf-canopy-edge-left {
+    left: 0;
+    background: linear-gradient(90deg, rgba(5, 8, 7, 0.65), transparent);
+}
+
+.leaf-canopy-edge-right {
+    right: 0;
+    background: linear-gradient(-90deg, rgba(5, 8, 7, 0.65), transparent);
+}
+
+.jungle-rooms-gallery {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 2.2vw;
+}
+
+.room-feature {
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    aspect-ratio: 16 / 7;
+}
+
+.room-feature img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.room-feature:hover img {
+    transform: scale(1.045);
+}
+
+.room-feature::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(5, 8, 7, 0.88) 0%, rgba(5, 8, 7, 0.1) 55%, transparent 75%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.room-feature-caption {
+    position: absolute;
+    left: 2.2rem;
+    bottom: 2rem;
+    right: 2.2rem;
+    z-index: 2;
+    max-width: 30rem;
+}
+
+.rfc-tag {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--color-golden-fire);
+    display: block;
+    margin-bottom: 0.6rem;
+}
+
+.room-feature-caption p {
+    font-size: clamp(1.4rem, 2.4vw, 2.1rem);
+    font-weight: 300;
+    color: var(--color-beige-soft);
+    line-height: 1.3;
+}
+
+.room-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.6vw;
+}
+
+.room-grid-item {
+    padding: 0;
+    overflow: hidden;
+    border-radius: 14px;
+}
+
+.room-grid-img-wrap {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+}
+
+.room-grid-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.room-grid-item:hover .room-grid-img-wrap img {
+    transform: scale(1.06);
+}
+
+.room-grid-item figcaption {
+    padding: 1.1rem 1.3rem 1.4rem;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.05rem;
+    color: rgba(241, 235, 225, 0.85);
+}
+
+.room-season-strip {
+    margin-top: 1.5vw;
+    padding-top: 2.5vw;
+    border-top: 1px solid rgba(241, 235, 225, 0.1);
+}
+
+.season-strip-label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(241, 235, 225, 0.45);
+    margin-bottom: 1.4rem;
+}
+
+.room-season-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.2vw;
+}
+
+.season-thumb {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+}
+
+.season-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.season-thumb:hover img {
+    transform: scale(1.08);
+}
+
+.season-thumb::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(5, 8, 7, 0.75) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.season-thumb figcaption {
+    position: absolute;
+    left: 0.9rem;
+    bottom: 0.7rem;
+    z-index: 2;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-beige-soft);
+}
+
 /* SECTION 4: THE GLOWING HEARTH (EXPERIENCES) */
 .experience-section {
     background-color: var(--color-forest-black);
@@ -1717,6 +1933,15 @@ body.silence-active .cwl-dot { background: #a88c5e; }
         grid-template-columns: 1fr;
         gap: 2rem;
     }
+
+    .room-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .room-season-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2vw;
+    }
     
     .booking-grid {
         grid-template-columns: 1fr;
@@ -1802,6 +2027,30 @@ body.silence-active .cwl-dot { background: #a88c5e; }
 
     .quote-ribbon {
         padding: 12vw 5vw;
+    }
+
+    .leaf-canopy-edge {
+        display: none;
+    }
+
+    .room-feature {
+        aspect-ratio: 4 / 5;
+    }
+
+    .room-feature-caption {
+        left: 1.4rem;
+        right: 1.4rem;
+        bottom: 1.4rem;
+    }
+
+    .room-grid {
+        grid-template-columns: 1fr;
+        gap: 4vw;
+    }
+
+    .room-season-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3vw;
     }
 }
 
@@ -2052,7 +2301,7 @@ body.silence-active .cwl-dot { background: #a88c5e; }
 .slider-section {
     background:
         linear-gradient(180deg, rgba(7, 29, 28, 0.92), rgba(13, 22, 18, 0.96) 48%, rgba(5, 8, 7, 0.98)),
-        url('assets/camp_sunlight.png');
+        url('assets/camp_sunlight.webp');
     background-size: cover;
     background-position: center;
     isolation: isolate;
@@ -2285,7 +2534,7 @@ body.silence-active .cwl-dot { background: #a88c5e; }
     opacity: 0.24;
     background:
         linear-gradient(180deg, rgba(5, 8, 7, 0.35), rgba(5, 8, 7, 0.85)),
-        url('assets/camp_night.png');
+        url('assets/camp_night.webp');
     background-size: cover;
     background-position: center;
 }
@@ -2297,7 +2546,7 @@ body.silence-active .cwl-dot { background: #a88c5e; }
 .booking-section {
     background:
         linear-gradient(90deg, rgba(5, 8, 7, 0.92), rgba(13, 22, 18, 0.78)),
-        url('assets/chalet.png');
+        url('assets/chalet.webp');
     background-size: cover;
     background-position: center right;
 }

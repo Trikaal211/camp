@@ -9,10 +9,12 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     
     <!-- Styling -->
-    <link rel="preload" as="image" href="assets/hero.png">
+    <link rel="preload" as="image" href="assets/hero.webp">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -101,8 +103,9 @@
                 <a href="#whispering-woods" class="nav-item" data-index="02"><span>Philosophy</span></a>
                 <a href="#living-forest" class="nav-item" data-index="03"><span>The Forest</span></a>
                 <a href="#river-dwellings" class="nav-item" data-index="04"><span>Dwellings</span></a>
-                <a href="#glowing-hearth" class="nav-item" data-index="05"><span>Experiences</span></a>
-                <a href="#sanctuary-gateway" class="nav-item" data-index="06"><span>Inquire</span></a>
+                <a href="#jungle-rooms" class="nav-item" data-index="05"><span>The Jungle Rooms</span></a>
+                <a href="#glowing-hearth" class="nav-item" data-index="06"><span>Experiences</span></a>
+                <a href="#sanctuary-gateway" class="nav-item" data-index="07"><span>Inquire</span></a>
             </nav>
         </div>
     </div>
@@ -113,6 +116,7 @@
         <!-- Background Canvases and Fixed Elements -->
         <div class="fixed-overlay-container">
             <div class="film-grain"></div>
+            <div class="jungle-leaf-overlay"></div>
             <div class="sunbeam-overlay"></div>
             <div class="global-light-rake"></div>
             <div class="valley-haze"></div>
@@ -126,7 +130,7 @@
         <!-- SECTION 1: THE CANOPY (HERO) -->
         <section id="canopy-hero" class="forest-section hero-section">
             <!-- Layers of background for cursor parallax effect -->
-            <div class="hero-bg parallax-bg" data-depth="0.08" style="background-image: url('assets/hero.png');"></div>
+            <div class="hero-bg parallax-bg" data-depth="0.08" style="background-image: url('assets/hero.webp');"></div>
             <div class="hero-gradient-overlay"></div>
             <div class="hero-light-field"></div>
             <div class="hero-ground-fog"></div>
@@ -156,7 +160,7 @@
             <div class="forest-grid">
                 <div class="grid-left parallax-element" data-speed="-0.08">
                     <div class="image-frame glass-panel">
-                        <img src="assets/forest_path.png" alt="Misty Himalayan pathway through pine trees" class="parallax-img" loading="lazy" decoding="async">
+                        <img src="assets/forest_path.webp" alt="Misty Himalayan pathway through pine trees" class="parallax-img" loading="lazy" decoding="async" width="1024" height="1024">
                     </div>
                 </div>
                 <div class="grid-right">
@@ -268,12 +272,12 @@
                     <!-- [CLONE] Card 3: Forest Hideaway (Prepended for infinite loop) -->
                     <div class="dwelling-card glass-panel card-clone" data-index="2">
                         <div class="card-img-wrap">
-                            <img class="card-img-weather" loading="lazy" decoding="async"
-                                 src="assets/camp_hideaway_sun.png" 
-                                 data-sunbeam="assets/camp_hideaway_sun.png"
-                                 data-rain="assets/camp_hideaway_rain.png"
-                                 data-snow="assets/camp_hideaway_snow.png"
-                                 data-silence="assets/camp_night.png"
+                            <img class="card-img-weather" loading="lazy" decoding="async" width="1024" height="1024"
+                                 src="assets/camp_hideaway_sun.webp" 
+                                 data-sunbeam="assets/camp_hideaway_sun.webp"
+                                 data-rain="assets/camp_hideaway_rain.webp"
+                                 data-snow="assets/camp_hideaway_snow.webp"
+                                 data-silence="assets/camp_night.webp"
                                  alt="Forest Hideaway glamping tent at Kabila">
                             <div class="card-weather-overlay"></div>
                             <div class="card-weather-label">
@@ -300,12 +304,12 @@
                     <!-- [REAL] Card 1: Geodesic Dome -->
                     <div class="dwelling-card active glass-panel" data-index="0">
                         <div class="card-img-wrap">
-                            <img class="card-img-weather" loading="lazy" decoding="async"
-                                 src="assets/camp_sunlight.png" 
-                                 data-sunbeam="assets/camp_sunlight.png"
-                                 data-rain="assets/camp_rain.png"
-                                 data-snow="assets/camp_snow.png"
-                                 data-silence="assets/camp_night.png"
+                            <img class="card-img-weather" loading="lazy" decoding="async" width="1024" height="1024"
+                                 src="assets/camp_sunlight.webp" 
+                                 data-sunbeam="assets/camp_sunlight.webp"
+                                 data-rain="assets/camp_rain.webp"
+                                 data-snow="assets/camp_snow.webp"
+                                 data-silence="assets/camp_night.webp"
                                  alt="Riverside Geodesic Dome at Kabila">
                             <div class="card-weather-overlay"></div>
                             <div class="card-weather-label">
@@ -332,12 +336,12 @@
                     <!-- [REAL] Card 2: Cedar Chalet -->
                     <div class="dwelling-card glass-panel" data-index="1">
                         <div class="card-img-wrap">
-                            <img class="card-img-weather" loading="lazy" decoding="async"
-                                 src="assets/geodesic.png" 
-                                 data-sunbeam="assets/geodesic.png"
-                                 data-rain="assets/camp_chalet_rain.png"
-                                 data-snow="assets/camp_chalet_snow.png"
-                                 data-silence="assets/camp_night.png"
+                            <img class="card-img-weather" loading="lazy" decoding="async" width="1024" height="1024"
+                                 src="assets/geodesic.webp" 
+                                 data-sunbeam="assets/geodesic.webp"
+                                 data-rain="assets/camp_chalet_rain.webp"
+                                 data-snow="assets/camp_chalet_snow.webp"
+                                 data-silence="assets/camp_night.webp"
                                  alt="Cedar Chalet at Kabila">
                             <div class="card-weather-overlay"></div>
                             <div class="card-weather-label">
@@ -364,12 +368,12 @@
                     <!-- [REAL] Card 3: Forest Hideaway -->
                     <div class="dwelling-card glass-panel" data-index="2">
                         <div class="card-img-wrap">
-                            <img class="card-img-weather" loading="lazy" decoding="async"
-                                 src="assets/camp_hideaway_sun.png" 
-                                 data-sunbeam="assets/camp_hideaway_sun.png"
-                                 data-rain="assets/camp_hideaway_rain.png"
-                                 data-snow="assets/camp_hideaway_snow.png"
-                                 data-silence="assets/camp_night.png"
+                            <img class="card-img-weather" loading="lazy" decoding="async" width="1024" height="1024"
+                                 src="assets/camp_hideaway_sun.webp" 
+                                 data-sunbeam="assets/camp_hideaway_sun.webp"
+                                 data-rain="assets/camp_hideaway_rain.webp"
+                                 data-snow="assets/camp_hideaway_snow.webp"
+                                 data-silence="assets/camp_night.webp"
                                  alt="Forest Hideaway glamping tent at Kabila">
                             <div class="card-weather-overlay"></div>
                             <div class="card-weather-label">
@@ -396,12 +400,12 @@
                     <!-- [CLONE] Card 1: Geodesic Dome (Appended for infinite loop) -->
                     <div class="dwelling-card glass-panel card-clone" data-index="0">
                         <div class="card-img-wrap">
-                            <img class="card-img-weather" loading="lazy" decoding="async"
-                                 src="assets/camp_sunlight.png" 
-                                 data-sunbeam="assets/camp_sunlight.png"
-                                 data-rain="assets/camp_rain.png"
-                                 data-snow="assets/camp_snow.png"
-                                 data-silence="assets/camp_night.png"
+                            <img class="card-img-weather" loading="lazy" decoding="async" width="1024" height="1024"
+                                 src="assets/camp_sunlight.webp" 
+                                 data-sunbeam="assets/camp_sunlight.webp"
+                                 data-rain="assets/camp_rain.webp"
+                                 data-snow="assets/camp_snow.webp"
+                                 data-silence="assets/camp_night.webp"
                                  alt="Riverside Geodesic Dome at Kabila">
                             <div class="card-weather-overlay"></div>
                             <div class="card-weather-label">
@@ -439,6 +443,80 @@
                     <button class="slider-arrow next" aria-label="Next room">
                         <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
                     </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3.5: THE JUNGLE ROOMS (PHOTO GALLERY) -->
+        <section id="jungle-rooms" class="forest-section jungle-rooms-section">
+            <div class="jungle-rooms-bg-glow"></div>
+            <div class="leaf-canopy-edge leaf-canopy-edge-left"></div>
+            <div class="leaf-canopy-edge leaf-canopy-edge-right"></div>
+
+            <div class="section-header-block">
+                <span class="section-tag">04 / INSIDE THE WILD</span>
+                <h3 class="serif-title section-title char-reveal">Every Room Opens Into Jungle</h3>
+                <p class="body-text char-reveal">
+                    Real rooms, beside the real Parvati River. Step through canvas and timber into spaces where the forest is never further than an arm's reach — soft linen, warm wood floors, and the river running just past the glass.
+                </p>
+            </div>
+
+            <div class="jungle-rooms-gallery">
+                <figure class="room-feature glass-panel parallax-element" data-speed="0.03">
+                    <img src="assets/rooms/riverside-day.webp" alt="Row of canvas-roofed camp rooms beside the Parvati River in Kasol" loading="lazy" decoding="async" width="761" height="505">
+                    <figcaption class="room-feature-caption">
+                        <span class="rfc-tag">THE ACTUAL VIEW</span>
+                        <p class="serif-title">Beside the Parvati River — every window frames the wild</p>
+                    </figcaption>
+                </figure>
+
+                <div class="room-grid">
+                    <figure class="room-grid-item glass-panel">
+                        <div class="room-grid-img-wrap">
+                            <img src="assets/rooms/interior-1.webp" alt="Twin beds with red cushions inside a Kabila canvas room" loading="lazy" decoding="async" width="647" height="772">
+                        </div>
+                        <figcaption>Twin beds, dressed and ready for arrival</figcaption>
+                    </figure>
+                    <figure class="room-grid-item glass-panel">
+                        <div class="room-grid-img-wrap">
+                            <img src="assets/rooms/interior-2.webp" alt="Wooden double bed with red throw inside a Kabila tent room" loading="lazy" decoding="async" width="603" height="772">
+                        </div>
+                        <figcaption>Warm timber floors, soft linen, low lamplight</figcaption>
+                    </figure>
+                    <figure class="room-grid-item glass-panel">
+                        <div class="room-grid-img-wrap">
+                            <img src="assets/rooms/interior-3.webp" alt="Room interior with glass wall looking onto the camp at Kabila" loading="lazy" decoding="async" width="576" height="772">
+                        </div>
+                        <figcaption>Wake up looking straight into the valley</figcaption>
+                    </figure>
+                    <figure class="room-grid-item glass-panel">
+                        <div class="room-grid-img-wrap">
+                            <img src="assets/rooms/entrance.webp" alt="Exterior entrance of a Kabila canvas room with private seating" loading="lazy" decoding="async" width="1536" height="1024">
+                        </div>
+                        <figcaption>Your own doorstep, steps from the riverbank</figcaption>
+                    </figure>
+                </div>
+
+                <div class="room-season-strip">
+                    <span class="season-strip-label">THE SAME VIEW, EVERY SEASON</span>
+                    <div class="room-season-grid">
+                        <figure class="season-thumb">
+                            <img src="assets/rooms/riverside-day.webp" alt="Riverside camp in clear daylight" loading="lazy" decoding="async" width="761" height="505">
+                            <figcaption>Dhoop</figcaption>
+                        </figure>
+                        <figure class="season-thumb">
+                            <img src="assets/rooms/riverside-rain.webp" alt="Riverside camp glowing in monsoon rain" loading="lazy" decoding="async" width="761" height="505">
+                            <figcaption>Varish</figcaption>
+                        </figure>
+                        <figure class="season-thumb">
+                            <img src="assets/rooms/riverside-snow.webp" alt="Riverside camp under fresh Himalayan snow" loading="lazy" decoding="async" width="761" height="506">
+                            <figcaption>Barf</figcaption>
+                        </figure>
+                        <figure class="season-thumb">
+                            <img src="assets/rooms/riverside-night.webp" alt="Riverside camp lit up at a silent night" loading="lazy" decoding="async" width="761" height="506">
+                            <figcaption>Sanataa</figcaption>
+                        </figure>
+                    </div>
                 </div>
             </div>
         </section>
@@ -607,6 +685,7 @@
                     <a href="#whispering-woods">Philosophy</a>
                     <a href="#living-forest">The Forest</a>
                     <a href="#river-dwellings">Dwellings</a>
+                    <a href="#jungle-rooms">The Jungle Rooms</a>
                     <a href="#glowing-hearth">Experiences</a>
                 </div>
                 <div class="footer-col legal-col">
@@ -625,11 +704,11 @@
     </div>
 
     <!-- CDNs: Lenis, GSAP, ScrollTrigger -->
-    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.33/dist/lenis.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+
     <!-- Custom Application Logic -->
-    <script src="app.js"></script>
+    <script src="app.js" defer></script>
 </body>
 </html>
