@@ -425,8 +425,7 @@ document.addEventListener('DOMContentLoaded', () => {
             trigger: block,
             start: 'top 85%',
             onEnter: () => block.classList.add('reveal-active'),
-            onLeaveBack: () => block.classList.remove('reveal-active'),
-            once: false
+            once: true
         });
     });
 
@@ -444,16 +443,22 @@ document.addEventListener('DOMContentLoaded', () => {
         targetMouseY = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
     });
 
-    function updateParallax() {
-        lastMouseX += (targetMouseX - lastMouseX) * 0.08;
-        lastMouseY += (targetMouseY - lastMouseY) * 0.08;
+    const parallaxBgEls = Array.from(document.querySelectorAll('.parallax-bg')).map(bg => ({
+        el: bg,
+        depth: parseFloat(bg.dataset.depth || 0.1)
+    }));
 
-        document.querySelectorAll('.parallax-bg').forEach(bg => {
-            const depth = parseFloat(bg.dataset.depth || 0.1);
-            const xVal = -lastMouseX * depth * 55;
-            const yVal = -lastMouseY * depth * 55;
-            bg.style.transform = `translate3d(${xVal}px, ${yVal}px, 0)`;
-        });
+    function updateParallax() {
+        if (!document.hidden) {
+            lastMouseX += (targetMouseX - lastMouseX) * 0.08;
+            lastMouseY += (targetMouseY - lastMouseY) * 0.08;
+
+            parallaxBgEls.forEach(({ el, depth }) => {
+                const xVal = -lastMouseX * depth * 55;
+                const yVal = -lastMouseY * depth * 55;
+                el.style.transform = `translate3d(${xVal}px, ${yVal}px, 0)`;
+            });
+        }
 
         requestAnimationFrame(updateParallax);
     }
@@ -823,19 +828,23 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(step);
     }
 
+    let dwellingsInView = true;
+
     function renderDwellingsLoop(now) {
         const delta = Math.min(48, now - lastLoopFrame);
         lastLoopFrame = now;
 
-        if (!reducedMotion && !loopPaused && !loopAnimating && loopSetWidth) {
-            loopOffset += loopDirection * loopSpeed * delta;
-            normalizeLoopOffset();
-            applyLoopTransform();
-        }
+        if (!document.hidden && dwellingsInView) {
+            if (!reducedMotion && !loopPaused && !loopAnimating && loopSetWidth) {
+                loopOffset += loopDirection * loopSpeed * delta;
+                normalizeLoopOffset();
+                applyLoopTransform();
+            }
 
-        if (now - lastFocusSync > 160) {
-            syncDwellingsFocus();
-            lastFocusSync = now;
+            if (now - lastFocusSync > 160) {
+                syncDwellingsFocus();
+                lastFocusSync = now;
+            }
         }
 
         requestAnimationFrame(renderDwellingsLoop);
@@ -844,6 +853,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (track && dwellingsViewport && sourceMarkup) {
         buildDwellingsLoop();
         requestAnimationFrame(renderDwellingsLoop);
+
+        if ('IntersectionObserver' in window) {
+            const dwellingsObserver = new IntersectionObserver((entries) => {
+                dwellingsInView = entries[0].isIntersecting;
+            }, { rootMargin: '200px 0px' });
+            dwellingsObserver.observe(dwellingsViewport);
+        }
 
         dwellingsViewport.addEventListener('pointerenter', () => { loopPaused = true; });
         dwellingsViewport.addEventListener('pointerleave', () => { loopPaused = false; });
